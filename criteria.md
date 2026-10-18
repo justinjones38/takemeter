@@ -54,12 +54,13 @@ whether you hit them:
 ## 1.
 
 <!-- Your criterion. It must name a number. -->
-Overall accuracy ≥ 0.75 on the held-out test split, on each of the 3 seeds, and at least 15 points above the majority-class share.
+1. Accuracy ≥ 0.75, and at least 15 points above the majority-class share
+
 
 
 
 **Why this target:**
-With 4 different labels, random guessing gets 25%. The "15 points above majority" part keep the target meaningful for whichever label ends up biggest
+I picked 0.75 becayse many posts carry obvious signals about the type that it is. News post usually cite a source; off-topic posts are usually labeled as off-topic; opinion usually mention that it is their opinion; humor posts are often sarcastic. However, it may be difficult to distinguish between humor and news posts. So, this allows about 7 misses out of 30, which is a borderline posts that I expect.
 
  
 ---
@@ -83,8 +84,7 @@ A strong news score will not a weak off-topic score. The per-label floor is loos
 
 
 **Why this target:**
-Below the 15% value, a label has 4 or fewer test posts and its F1 in #2 become noise. 
-
+THis ensure that each label is fairly represented and that my collection does not lean toward news and humor, which makes up a vast majority of posts on the f1 reddit page.
 ---
 
 ## 4.
@@ -92,7 +92,7 @@ Below the 15% value, a label has 4 or fewer test posts and its F1 in #2 become n
 At least 80% agreement with the staff labels in agreement.py
 
 **Why this target:**
-This is the only check on whether my labels are consistent. If I can't match a writtene rule 80% of the time, low model scores could be the label's fault, not the model's fault.
+This is the only check on whether my labels are consistent. If I can't match a written rule 80% of the time, low model scores could be the label's fault, not the model's fault.
 
 
 ---
