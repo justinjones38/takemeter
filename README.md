@@ -42,10 +42,13 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
-
+I am posting about the Formula 1 reddit page. My classifiers is news, humor, off-topic, and opinion. These classifiers cover the posts that mostly appear in the F1 reddit page.
 ---
 
+** Candidate distinctions I saw while going through posts:
+- Most news post cite a website or a source.
+- Humorous post usually include the joke in the post if told by person in Formula 1
+- There are a lot of images on the F1 page
 ## Label Taxonomy
 
 <!-- Each label: a one-sentence definition and two real examples from your
@@ -54,34 +57,72 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `News`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** providing updates news on the latest transfer, driver stories, and results around F1
 
 **Example 1:**
 >
+[Autoracer] Ferrari unveils the fourth SF-26 package at Austin:
+
 
 **Example 2:**
 >
+[Valtteri Bottas] 419.67km commute; Well arrived in Singapore this arvo.
+
+
+
+### `humor`
+
+**Definition:** attempting to make funny statements or make a joke about certain statistics of drivers;
+
+**Example 1:**
+>
+Congratulations to Lance Stroll for Completing his 1st Full Race This Year
+
+
+**Example 2:**
+>
+Oscar Piastri’s pre-f1 era tweets are so funny
+
+### `opinion`
+
+**Definition:** giving an opinion on an F1 that is deemed to cause a discussion
+
+**Example 1:**
+>
+In my opinion the most down to earth and genuine F1 driver out there.
+
+
+**Example 2:**
+>
+In my opinion, the SF71-H is the prettiest looking Ferrari since the F2004. Photo credit goes to u/Kerrentonsnow
+
+### `off-topic`
+
+**Definition:** posts that are not F1 news (current or historical), not a joke about F1, and not an opinion about F1, such as other motorsports, F1 drivers' lives outside their F1 careers (vacations, advice), or general questions and random topics.
+
+**Example 1:**
+>
+Parents went on vacation and brought me back my first F1 merchandise!
+
+
+**Example 2:**
+>
+Discussion thread. Where would you take a week long F1 vacation? (A little game to pass the time)
+
+
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** news and humor
+"Do they think I have a button that says, ‘George engine failure now’?": Toto Wolff slams idea of Mercedes favoring Kimi Antonelli over George Russell
+
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
-
+If the post has any newsworthy information, it is listed as news, even if there is sarcasm or humor in the tweet.
 
 
 ---
@@ -92,17 +133,20 @@
      cases. -->
 
 **Where the posts came from:**
+The post came from the F1 reddit page.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+I labeled the first 24 cold, and then let AI prelabel the rest of them. I did review each of the post and correct some of them that I felt was inaccurate.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| news | 57 | 28.5% |
+| humor | 57 | 28.5% |
+| off-topic | 48 | 24% |
+| opinion | 38 | 19% |
 | **Total** |  | 100% |
 
 **Three hard cases**
@@ -111,25 +155,25 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post: "[The Race] Isack Hadjar to Sky following his sprint race retirement... 'except for Lewis, apparently!*
 >
-> *Could have been:*
+> *Could have been: news*
 >
-> *I chose, because:*
+> *I chose humor, because: it was a driver making a joke about the story. Humor is making joke about statistics and that is what Isack did.*
 
 **2.**
-> *The post:*
+> *The post: Max Verstappen has now led more Grand Prix laps in Singapore than Antonio Giovinazzi (4).*
 >
-> *Could have been:*
+> *Could have been: news*
 >
-> *I chose, because:*
+> *I chose humor, because: it was making a joke about driver's statistics*
 
 **3.**
-> *The post:*
+> *The post: Verstappen: F1 shouldn't hold sprint races on tracks where you can't pass",*
 >
-> *Could have been:*
+> *Could have been news:*
 >
-> *I chose, because:*
+> *I chose opinion, because Max was giving an opinion on the topic of sprint races:*
 
 ---
 
@@ -137,17 +181,93 @@ Say so plainly — the disclosure is required, not penalised. -->
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** 
+BASE_MODEL = "distilbert-base-uncased"
 
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
+EPOCHS = 3
+LEARNING_RATE = 2e-5
+BATCH_SIZE = 16
+SEED = 42
+
 
 **Anything I changed from the defaults, and why:**
+I have left everything on default. I only added my 4 labels.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
 
+```python
+from sklearn.model_selection import train_test_split
 
+
+def split_dataset(df, seed, test_size=0.15, val_size=0.15):
+    """
+    Stratified 70/15/15. Returns (train, val, test) DataFrames.
+
+    Stratifying falls back to a plain random split if any label is too rare to
+    stratify on — that's a warning sign about the dataset, not about the split.
+    """
+    def _stratify_on(frame):
+        counts = frame["label"].value_counts()
+        return frame["label"] if counts.min() >= 2 else None
+
+    rest, test = train_test_split(
+        df, test_size=test_size, random_state=seed, stratify=_stratify_on(df)
+    )
+    val_share = val_size / (1 - test_size)
+    train, val = train_test_split(
+        rest, test_size=val_share, random_state=seed, stratify=_stratify_on(rest)
+    )
+    return (
+        train.reset_index(drop=True),
+        val.reset_index(drop=True),
+        test.reset_index(drop=True),
+    )
+
+
+def describe_splits(train, val, test, labels):
+    """A table of per-label counts per split, and a note on the thin ones."""
+    import pandas as pd
+
+    table = pd.DataFrame({
+        "train": train["label"].value_counts(),
+        "val": val["label"].value_counts(),
+        "test": test["label"].value_counts(),
+    }).reindex(labels).fillna(0).astype(int)
+
+    thin = [label for label in labels if table.loc[label, "test"] < 8]
+    return table, thin
+
+
+train_df, val_df, test_df = split_dataset(df, SEED)
+table, thin = describe_splits(train_df, val_df, test_df, LABELS)
+
+print(f"train {len(train_df)}  ·  val {len(val_df)}  ·  test {len(test_df)}\n")
+print(table.to_string())
+
+if thin:
+    print()
+    for label in thin:
+        n = table.loc[label, "test"]
+        print(f"[note] '{label}' has only {n} examples in the test split.")
+    print()
+    print("A metric computed on that few examples moves a lot between seeds.")
+    print("Write that down now — next unit it's a diagnosis, not a surprise.")
+```
+
+
+**Per label test counts**
+
+train 139  ·  val 31  ·  test 30
+
+           train  val  test
+label                      
+news          40    9     8
+humor         39    9     9
+opinion       26    6     6
+off-topic     34    7     7
 
 ---
 
@@ -162,17 +282,18 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* to finish completing the rows on my labels.csv file
+- *What came back:*  it returned the rows and labelled them "pre-labelled"
+- *What I changed:* I reviewed the rows and made a couple of minor changes.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* advice on to run the takemeter.ipynb file
+- *What came back:* it gave me advice on how to run the file 
+- *What I changed:* I knew how to run the file now.
 
 **Pre-labelling disclosure:**
+I labeled the first 24 rows and marked them cold. I then allowed the AI to label the next 176 rows and marked them "pre-labeled". I then checked over what AI did and marked them "pre-labeled-checked" after completing them. I changed a couple from news to humor but left most of them with what the AI marked.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 

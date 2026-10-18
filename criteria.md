@@ -54,59 +54,56 @@ whether you hit them:
 ## 1.
 
 <!-- Your criterion. It must name a number. -->
+Overall accuracy ≥ 0.75 on the held-out test split, on each of the 3 seeds, and at least 15 points above the majority-class share.
 
 
 
 **Why this target:**
+With 4 different labels, random guessing gets 25%. The "15 points above majority" part keep the target meaningful for whichever label ends up biggest
 
-
-
+ 
 ---
 
 ## 2.
-
 <!-- Your criterion. -->
+Macro F1 ≥ 0.65, and every label's F1 ≥ 0.50, on each of the 3 seeds.
 
 
 
 **Why this target:**
-
-
+A strong news score will not a weak off-topic score. The per-label floor is loose because the smallest label will have a small amount of test, so one miss will move F1 by about 0.15 to 0.2
 
 ---
 
 ## 3.
 
 <!-- Your criterion. -->
+3. Every label is at least 15% of my labelled data, and each has at least 5 posts in the test split.
 
 
 
 **Why this target:**
-
-
+Below the 15% value, a label has 4 or fewer test posts and its F1 in #2 become noise. 
 
 ---
 
 ## 4.
-
 <!-- Your criterion. -->
-
-
+At least 80% agreement with the staff labels in agreement.py
 
 **Why this target:**
-
+This is the only check on whether my labels are consistent. If I can't match a writtene rule 80% of the time, low model scores could be the label's fault, not the model's fault.
 
 
 ---
 
 ## 5.
-
 <!-- Your criterion. -->
-
+Predictions with confidence >= 0.9 are correct at least 12 points more often than predictions below 0.9, if each bucket has at least 5 posts. Otherwise, it will be reported as not measurable for that seed.
 
 
 **Why this target:**
-
+Sarcastic-humor and news should produce unsure predictions.
 
 
 ---
