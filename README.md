@@ -309,14 +309,18 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.233 | 0.433 | +0.200 |
+| Macro F1 | 0.151 | 0.330 | +0.180 |
+| F1 — `humor` | 0.000 | 0.571 | +0.571 |
+| F1 — `news` | 0.000 | 0.500 | +0.500 |
+| F1 — `off-topic` | 0.250 | 0.250 | +0.000 |
+| F1 — `opinion` | 0.353 | 0.000 | -0.353 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+I predict my trained model would do a better job at handling discrepancy between humor and news post.
+
 
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
