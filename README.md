@@ -325,7 +325,7 @@ I predict my trained model would do a better job at handling discrepancy between
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
-
+My prediction mostly held; the trained model handled humor and news better than the baseline. However, my labeled definitions made the baseline worse. There is 0.200 difference in accuracy when the baseline bare names are used when compared to the definition. The opinion definition ended taking most of posts. My opinion definiiton was so broad that the model defined most F1 posts as opinion. So, using the baseline with definitions made the model worse and let to worse accuracy, especially with most of the post being classified as opinion
 
 
 ---
