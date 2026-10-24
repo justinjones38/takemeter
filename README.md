@@ -337,27 +337,34 @@ My prediction mostly held; the trained model handled humor and news better than 
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Accuracy | ≥ 0.75, and ≥ 15 pts above majority share (0.30 → 0.45) | 0.433 | 0.467 | 0.433 | MISSED |
+| 2. Macro F1, every label F1 | Macro ≥ 0.65, every label ≥ 0.50 | 0.330 (opinion 0.00, off-topic 0.25) | 0.292 (opinion 0.00, off-topic 0.00) | 0.377 (off-topic 0.00) | MISSED |
+| 3. Label balance | Every label ≥ 15% of data, ≥ 5 per label in test | smallest label 19%, min 6 in test | min 6 in test | min 6 in test | MET |
+| 4. Staff agreement | ≥ 80% | — | — | — | Pending agreement.py |
+| 5. Confidence ≥ 0.9 vs < 0.9 | ≥ 12 pts more accurate, each bucket ≥ 5 posts | not measurable | not measurable | not measurable | NOT MEASURABLE |
+
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+
+| true \ predicted | news | humor | opinion | off-topic |
+|---|---|---|---|---|
+| **news** | 8 | 0 | 0 | 0 |
+| **humor** | 5 | 4 | 0 | 0 |
+| **opinion** | 6 | 0 | 0 | 0 |
+| **off-topic** | 5 | 1 | 0 | 1 |
+
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
+
+
+My biggest off-diagnol number is my opinion post are being called news. 6 of my opinion post were called news and none of my news post were called opinion. So, my model is leaning toward news.
 
 
 
