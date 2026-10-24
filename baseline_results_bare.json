@@ -1,0 +1,190 @@
+{
+  "model": "facebook/bart-large-mnli",
+  "n": 30,
+  "seed": 42,
+  "held_out": true,
+  "used_definitions": false,
+  "scores": {
+    "n": 30,
+    "accuracy": 0.43333333333333335,
+    "f1_macro": 0.34967948717948716,
+    "per_label": {
+      "humor": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      },
+      "news": {
+        "precision": 0.36363636363636365,
+        "recall": 1.0,
+        "f1": 0.5333333333333333,
+        "support": 8
+      },
+      "off-topic": {
+        "precision": 1.0,
+        "recall": 0.14285714285714285,
+        "f1": 0.25,
+        "support": 7
+      },
+      "opinion": {
+        "precision": 0.5714285714285714,
+        "recall": 0.6666666666666666,
+        "f1": 0.6153846153846153,
+        "support": 6
+      }
+    }
+  },
+  "predictions": [
+    {
+      "text": "The Aston Martin single seater V12 prototype testing on the Paul Ricard [OT] [OC]",
+      "gold": "off-topic",
+      "predicted": "opinion"
+    },
+    {
+      "text": "Max and Isack during a recent fan event Gather your thoughts for Isack \ud83d\ude2d",
+      "gold": "humor",
+      "predicted": "opinion"
+    },
+    {
+      "text": "[Charles Leclerc] A day we\u2019ll forever remember. Part one is done and part 2 will be next year with all of our close ones.",
+      "gold": "off-topic",
+      "predicted": "news"
+    },
+    {
+      "text": "[OT] [Ferrari Driver Academy] Welcome to your 2027 FDA line-up",
+      "gold": "off-topic",
+      "predicted": "opinion"
+    },
+    {
+      "text": "Who are the top 3 drivers this season so far? In your opinion, who are the top 3 drivers so far in this season ? Statistically speaking its obviously Kimi at the top. Kimi Antonelli has consistently delivered a high level of performance and matched that to actual consistency in results too. In particular, his race pace has often been relentless. His ceiling, exemplified by a dominant Monaco weekend, is sky-high, while his basement has also been higher than most as he's kept major errors to a minimum. Max Verstappen and Lewis Hamilton are probably the two other names people would throw in, Lewis has extracted points from some really horrible situations and even outdid the Mercs a few times while Max has been dominant after finally finding footing with the new upgrades. Finally Id personally add in: Liam Lawson. Lawson has scored 75 points and sits ninth in the Drivers' Championship after the Singapore Grand Prix. That's a respectable return for a driver competing with Racing Bulls for much of the season, rather than a regular championship-leading car and puts him above most of the others. Russel has been too unlucky , so I don't know what to entirely think about him. Leclerc has been clearly inferior to Hamilton.",
+      "gold": "opinion",
+      "predicted": "opinion"
+    },
+    {
+      "text": "[OT] [F3] BREAKING: Gabriel Gomez links up with LN4 Fusion. The Brazilian steps up to F3 as the squad\u2019s second signing for 2027. Great signing for LN4 Fusion, and cases like his are the reason LN4 Fusion are in the sport now. 2nd in Italian F4, but doesn't have a high amount of funds so he had to go to a struggling Rodin team in FREC, and wasn't a gurantee for an F3 seat due to lack of budget.",
+      "gold": "off-topic",
+      "predicted": "news"
+    },
+    {
+      "text": "At this rate P2 in standings for Max is realistic RBR and Max in good shape now. The deficit to Lewis is only 8 points and to Russell only 17 points. Do you think Max can be 2nd in the standings at the end of the season?",
+      "gold": "opinion",
+      "predicted": "news"
+    },
+    {
+      "text": "It's official now Mr. & Mrs. Leclerc",
+      "gold": "off-topic",
+      "predicted": "news"
+    },
+    {
+      "text": "2026 Mandatory Rookie Practice sessions status after Singapore",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "Sepang really showed why Hamilton, Verstappen and Alonso are in a different league One thing I loved about this weekend was how much Sepang rewarded actual racecraft and adaptability. It is such a wide track that drivers have room to try different lines, improvise and actually fight instead of just following the obvious racing line. Add in the teams having limited sim data and everyone having to learn and adapt throughout the weekend, and somehow the three guys who kept standing out were Hamilton, Verstappen and Alonso. The racing IQ of these three is something else: Alonso's move on Linblad, Hamilton refusing to pit, predicted track will dry in 10 laps (crossover happened at lap 9), Verstappen's perfect SC restart to take the lead. Different generations, very different driving styles, but give them a weekend where experience, instinct and adaptability matter and they are absolutely schooled everyone else. These three really are something else.",
+      "gold": "opinion",
+      "predicted": "opinion"
+    },
+    {
+      "text": "[Autoracer] Ferrari unveils the fourth SF-26 package at Austin:",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "If you are reading this, you have been penalized for speeding at 60.1 km/h in the Monaco pit lane. Please serve your penalty in the comments and you will receive a limited edition flair. In order to serve your penalty all you have to do is send a top-level comment in which you name a driver who did NOT get a penalty and come up with a good reason for why they should also be penalized. Please use the following format: Driver: <Lastname> Reason: <a totally legit reason for why they should be penalized> Small warning: some of you may fail to serve the penalty... in which case you may receive a different flair",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "[cadillacf1]\"No admin privileges for our drivers\" \"Checo would delete the accounts forever\"",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "Lando being told off for drinking coke in the cooldown room: \"I just did a race. So I'm allowed to drink what I would like. thank you so much.\"",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "Which team do you think will dominate next year ? This year was mostly dominated by Mercedes, and then got Red Bull, Mclaren and Ferrari ( kind of ) finding the secret recipe. Next year will be interesting, if Red Bull continues to add on their upgrades which we've seen ( in the last 2 races ) work, will they dominate ? Or Ferrari will make an ok engine and finally get the strategy the drivers deserve. Or even Cadillac, who knows... ( just kidding, at best 1 or 2 points next year )",
+      "gold": "opinion",
+      "predicted": "opinion"
+    },
+    {
+      "text": "Liam Lawson will headline VCARB Garage Sessions in Austin We\u2019ve got GIG news for you Liam Lawson and Friends will headline VCARB Garage Sessions in Austin",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "Q: \"Max, what would it mean to you to get that first win here in front of these fans?\"Max: \"Yeah, for some reason, it has never happened here...\"Hadjar : \"He's bad. He can't drive here, forget it.\"",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "[Luke Smith] In the first two runs of his test, Rafael C\u00e2mara had improved by seven-tenths. \u201cBecause that second run, 18.5, was so good, I thought maybe he could improve a tenth or half a tenth,\" Komatsu recalled. \u201cDo you know how much he improved by? Four-and-a-half tenths.\u201d Ayao Komatsu could not believe what he was seeing. The live data coming from the Haas Formula 1 car as it lapped the Portim\u0101o circuit in southern Portugal suggested that it was going to crash. But Rafael C\u00e2mara had everything under control. \u201cHe was braking really late. I was like, \u2018No way he\u2019s going to make it stick,\u2019\u201d Komatsu recalled in an interview with The Athletic . \u201cYou could see it on the speed trace (car telemetry data). But bang, he hits the apex, and he\u2019s out of the corner. It was sensational.\u201d Komatsu\u2019s eyes then turned to the stopwatch as C\u00e2mara neared the finish line. In the first two runs of his private F1 test with Haas, his shot at securing an F1 seat for 2027, he\u2019d already improved by seven-tenths of a second, from 1:19.2 to 1:18.5. The pole position lap time for the most recent Portuguese Grand Prix at the track \u2014 in 2021 \u2014 was a 1:18.3. But with the track growing hotter and the wind picking up, Komatsu doubted he\u2019d be able to go faster. \u201cBecause that second run, 18.5, was so good, I thought maybe he could improve a tenth or half a tenth, or maybe he goes slower by overdriving. \u201cDo you know how much he improved by? Four-and-a-half tenths.\u201d A 1m18.05. At that moment, Komatsu knew he had to sign C\u00e2mara to race Haas for 2027.",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "[AutoRacer] Haas selects C\u00e2mara for 2027, Bearman eyes Hamilton's seat",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "In honor of Sepang two weeks ago - who\u2019s signatures did I get (2009) Hello everyone, I attended Sepang back in 2009 in my teen years. I remember the race, the noise and how fun it was to be there. My dad also knew where all the drivers stayed so we waited there till late in the night to get some autographs, would love some help identifying who I got. I know I have Bernie Ecclestone, Hamilton, Button (I think) but that\u2019s it. Appreciate it!",
+      "gold": "off-topic",
+      "predicted": "news"
+    },
+    {
+      "text": "Monaco rules out making changes to its Formula 1 track layout",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "The new vip building at T1 at COTA vs the view before",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "Congratulations to Lance Stroll for Completing his 1st Full Race This Year First race for Lance this year where he not DNF'd or being lapped. Amazing job from him Great weekend in general for Aston Martin. Alonso got points for the team and they had a pretty strong weekend",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "George telling Ollie not to step over the red line of the Mercedes garage",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "[Off-Topic][Honda Racing]Jenson Button Pushes the Raybrig NSX-GT at Laguna Seca",
+      "gold": "off-topic",
+      "predicted": "off-topic"
+    },
+    {
+      "text": "[Williamsracing] You saw it at Comic Con, now see it in our Austin Fan Zone This special Marvel livery is coming to the show car in the Austin Fan Zone - we can't wait for you to see it in person!",
+      "gold": "news",
+      "predicted": "news"
+    },
+    {
+      "text": "Max Verstappen has now led more Grand Prix laps in Singapore than Antonio Giovinazzi (4).",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "Will FE surpass F1 in manufacture funding past 2030? With Saudi funding over $1 billion and Emirati Mohammed Ben Sulayem pushing for F1 to reduce drivetrain efficiency for 2030 & going against engine manufacturers' interests. Meanwhile, FE Gen 5 will likely debut around 2030, with qualifying performance possibly rivaling F1 at most tracks. Do you think Saudi interests will push manufacturing investment away long term & making them fund FE instead?",
+      "gold": "opinion",
+      "predicted": "news"
+    },
+    {
+      "text": "A father hiding his son eyes after the Piastri and Lando incident",
+      "gold": "humor",
+      "predicted": "news"
+    },
+    {
+      "text": "Ferrari Pitwall Communication Singapore was a very frustrating watch as a Ferrari fan (and a very boring watch as an F1 fan). I don't think Ferrari really messed up Hamilton's strategy all that badly - pitting him that early was probably not ideal and then staying out was Hamilton's call, not the teams' call, so it's live-by-the-sword-die-by-the-sword. However. The communication between Hamilton and his race engineer is atrocious. When he asks them 'what was the pace of the other cars at the end of their stints on the soft tires' it felt like they were getting out the dictionary to translate it - they had absolutely no clue what he was asking. In general there is absolutely zero rapport between Hamilton and Carlo Santi - when Hamilton said 'I want to stay out' Santi should have said \"Absolutely not, trust me on this\" but somehow I can't imagine Santi ever saying those words. It feels like if he was asked to say that sentence in a job interview he would just quit on spot - it doesn't feel like he's capable of being that direct. Similarly, there was the issue of Hamilton pitting early and then getting stuck behind LeClerc on faster tires. If he was on a different strategy then it's a no-brainer - tell him to move out of the way! Ferrari has done this before. But somehow they get themselves into knots trying to figure out how to communicate something simple to their drivers that probably was - or definitely should have been - discussed before the race. And if they said before the race they're not doing it then tell him \"No, we discussed this\". If this was Mercedes Toto would come on the radio and say 'Lewis this is Toto, please let Charles by, he's on a different strategy'. I'm not saying Ferrari needs to copy Mercedes but someone on the pitwall needs to be the adult in the room. I literally cannot see how Ferrari can win a championship without an enormous car advantage if they can't sort this out. It's so frustrating to watch. How is this not obvious to the management at Ferrari?",
+      "gold": "opinion",
+      "predicted": "opinion"
+    }
+  ]
+}

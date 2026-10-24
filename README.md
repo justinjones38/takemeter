@@ -292,6 +292,12 @@ off-topic     34    7     7
 - *What came back:* it gave me advice on how to run the file 
 - *What I changed:* I knew how to run the file now.
 
+**Moment 3**
+
+- *What I asked for:* advice on to run on the best diagnosis to change
+- *What came back:* it advised me to change the EPOCHS to 10.
+- *What I changed:* I listened and changed it
+
 **Pre-labelling disclosure:**
 I labeled the first 24 rows and marked them cold. I then allowed the AI to label the next 176 rows and marked them "pre-labeled". I then checked over what AI did and marked them "pre-labeled-checked" after completing them. I changed a couple from news to humor but left most of them with what the AI marked.
 
@@ -309,51 +315,63 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.233 | 0.433 | +0.200 |
+| Macro F1 | 0.151 | 0.330 | +0.180 |
+| F1 — `humor` | 0.000 | 0.571 | +0.571 |
+| F1 — `news` | 0.000 | 0.500 | +0.500 |
+| F1 — `off-topic` | 0.250 | 0.250 | +0.000 |
+| F1 — `opinion` | 0.353 | 0.000 | -0.353 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+I predict my trained model would do a better job at handling discrepancy between humor and news post.
+
 
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
-
+My prediction mostly held; the trained model handled humor and news better than the baseline. However, my labeled definitions made the baseline worse. There is 0.200 difference in accuracy when the baseline bare names are used when compared to the definition. The opinion definition ended taking most of posts. My opinion definiiton was so broad that the model defined most F1 posts as opinion. So, using the baseline with definitions made the model worse and let to worse accuracy, especially with most of the post being classified as opinion
 
 
 ---
 
 ## Run Log — Before
+**Device:** cpu (torch 2.14.1+cpu), all runs
 
 <!-- Five criteria across three seeds. The notebook's section 6 prints the
      spread table; the Target and Verdict columns are yours. -->
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Accuracy | ≥ 0.75, and ≥ 15 pts above majority share (0.30 → 0.45) | 0.433 | 0.467 | 0.433 | MISSED |
+| 2. Macro F1, every label F1 | Macro ≥ 0.65, every label ≥ 0.50 | 0.330 (opinion 0.00, off-topic 0.25) | 0.292 (opinion 0.00, off-topic 0.00) | 0.377 (off-topic 0.00) | MISSED |
+| 3. Label balance | Every label ≥ 15% of data, ≥ 5 per label in test | smallest label 19%, min 6 in test | min 6 in test | min 6 in test | MET |
+| 4. Staff agreement | ≥ 80% | — | — | — | Pending agreement.py |
+| 5. Confidence ≥ 0.9 vs < 0.9 | ≥ 12 pts more accurate, each bucket ≥ 5 posts | not measurable | not measurable | not measurable | NOT MEASURABLE |
+
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+
+| true \ predicted | news | humor | opinion | off-topic |
+|---|---|---|---|---|
+| **news** | 8 | 0 | 0 | 0 |
+| **humor** | 5 | 4 | 0 | 0 |
+| **opinion** | 6 | 0 | 0 | 0 |
+| **off-topic** | 5 | 1 | 0 | 1 |
+
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
+
+
+My biggest off-diagnoal number is my opinion post are being called news. 6 of my opinion post were called news and none of my news post were called opinion. So, my model is leaning toward news.
 
 
 
@@ -366,11 +384,11 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Accuracy  | ≥ 0.75 and ≥ 0.45 (15 pts above 0.30 majority) | MISSED | All three seeds below 0.75 |
+| 2 | Macro F1 + per-label F1 | Macro ≥ 0.65, every label ≥ 0.50 | MISSED | Off-topic F1 is 0.25 or lower on every seed and opinion is 0.00 on 2 |
+| 3 | Label Agreement | Every label ≥ 15%, ≥ 5 per label in test | MET | Smallest label is at 19% and the smallest test count is 6 |
+| 4 | Staff agreement | ≥ 80% | MET | 93% in agreement.py |
+| 5 | Confidence gap at 0.9 | ≥ 12 pts, each bucket ≥ 5 | NOT MEASURABLE | Average confidence is about 0.29. Fewer than the 5 predictions reached 0.9 on any seed |
 
 **Diagnoses**
 
@@ -382,6 +400,12 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
      ⚠️ Use your agreement report as evidence. It is the only instrument you
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
+
+For Criterion 1, the model never really learned how to tell the labels apart. the definitions were too broad, and it led to the model guessing news for most of the models.
+
+For Criterion 2, the model overpredicting news led to the two smallest labels being hit the hardest, especially opinion, which had an F1 of 0.00 on two seeds. 
+
+For Criterion 5, the criterion is broken. I assumed that the label definitions were distinct enough, so that the model would be sure of its answers. The model only averaged a confidence of about 0.29.
 
 
 
@@ -395,7 +419,7 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 28 / 30 = 93%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -418,96 +442,102 @@ I labeled the first 24 rows and marked them cold. I then allowed the AI to label
      what you did across your own 200. -->
 
 **1.**
-> *The post:*
+> *The post:* Times are down about 3% since the shoe rules changed, so obviously the shoes are the whole story and the sport has a problem.
 >
-> *Staff said / I said:*
+> *Staff said / I said:* hot-take
 >
-> *My call, and why:*
+> *My call, and why:* I said analysis because there was a data that was used when making this opinion. The 3% time down made me think it was analysis
 >
-> *Which pile:*
+> *Which pile:* c
 
 **2.**
-> *The post:*
+> *The post:* Every injury thread on this forum is the same injury and the same three replies.
 >
-> *Staff said / I said:*
+> *Staff said / I said:* hot-take
 >
-> *My call, and why:*
+> *My call, and why:* I said reaction because I saw the post react to the forum and how each injury thread is the same. So, I said because it was immediate to something that happened.
 >
-> *Which pile:*
+> *Which pile:* c
 
 **What the pattern in my disagreements tells me:**
-
+I think the pattern shows that some posts can cross into multiple labels because I feel like both disagreements could fit both labels.
 
 
 ---
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** raised EPOCHS from 3 to 10.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** My diagnosis for Criterion 1, the model was not trained properly. It only had a confidence of around 0.29. So, hopefully, more epochs can give it more training on the same data.
 
 ### Run Log — After
+**Device:** cpu (torch 2.14.1+cpu), all runs
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Accuracy | ≥ 0.75, and ≥ 15 pts above majority share (0.30 → 0.45) | 0.533 | 0.500 | 0.600 | MISSED |
+| 2. Macro F1, every label F1 | Macro ≥ 0.65, every label ≥ 0.50 | 0.484 (off-topic 0.00) | 0.440 (off-topic 0.00) | 0.571 (off-topic 0.40) | MISSED |
+| 3. Label balance | Every label ≥ 15% of data, ≥ 5 per label in test | smallest label 19%, min 6 in test | min 6 in test | min 6 in test | MET |
+| 4. Staff agreement | ≥ 80% | 93% | 93% | 93% | MET |
+| 5. Confidence ≥ 0.9 vs < 0.9 | ≥ 12 pts more accurate, each bucket ≥ 5 posts | not measurable | not measurable | not measurable | NOT MEASURABLE |
+
 
 **Did it help, and how do I know:**
 
 <!-- If it didn't, say so. Relabelling that didn't help is a genuinely
      interesting result and earns full credit. -->
 
-
+It did help improve accuracy and confidence. The accuracy jumped from around 0.43 to around 0.5 to 0.6 for the 3 runs. So, there was a noticable increase in the accuracy. There was also a notable increase in average confidence, from about 0.29 to 0.45. Finally, macro F1 rose from 15 to 19 points on each seed.
 
 ---
 
 ## What's Still Broken
+The main thing still broken is that off-topic is still broken. It registered 0.00 on 2 seeds. When I ran the increased training, it fixed opinion, but not off-topic. So, it tells me that the off-topic problem is caused by a labeling issue. I did not define it properly.
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
+For Criterion 1 and Criterion 2, I would fix the off-topic definition so the label say what an off-topic post is rather than defining by what it is not. I would be clear in defining off-topic.
 
+For Criterion 5, revise it to compare the model's most-confident third against its least-confident third. The notebook already records that, and it now shows a clear gap: 0.6 vs 0.3, 1.0 vs 0.2 and 0.8 vs 0.4.
 
+I did not have time to complete it, so I stopped.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
 <!-- Two sentences. Your confusion matrix is the evidence. -->
-
+I meant off-topic to get posts that was not about F1 racing, but the model would any post that mentions drivers or motorsports as news. My label definition mostly said what the definition would not be.
 
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
      SUBMISSION CHECKLIST — unit 5
 
-       [ ] criteria.md has five numbered criteria, each naming a NUMBER
-       [ ] Each has a reason underneath tied to your data or taxonomy
-       [ ] labels.csv: at least 150 rows, text/label/note, ONE file not split
-       [ ] No label above 70%
-       [ ] All five unit 5 sections have real content
-       [ ] Label Taxonomy includes the decision rule for your hardest boundary
-       [ ] The Dataset includes three hard cases
-       [ ] results.json and test_split.csv committed (the notebook does this)
-       [ ] At least four new commits
-       [ ] Repository URL submitted — WRITE IT DOWN
+       [X] criteria.md has five numbered criteria, each naming a NUMBER
+       [X] Each has a reason underneath tied to your data or taxonomy
+       [X] labels.csv: at least 150 rows, text/label/note, ONE file not split
+       [X] No label above 70%
+       [X] All five unit 5 sections have real content
+       [X] Label Taxonomy includes the decision rule for your hardest boundary
+       [X] The Dataset includes three hard cases
+       [X] results.json and test_split.csv committed (the notebook does this)
+       [X] At least four new commits
+       [X] Repository URL submitted — WRITE IT DOWN
 
      SUBMISSION CHECKLIST — unit 6
 
-       [ ] Baseline vs. Trained table, with your prediction written beforehand
-       [ ] Run Log — Before, five criteria across three seeds
-       [ ] Confusion matrix TYPED AS A MARKDOWN TABLE
-       [ ] A verdict on every criterion
-       [ ] A diagnosis for every miss, using the agreement report as evidence
-       [ ] Agreement Report with every disagreement adjudicated
-       [ ] One improvement, with Run Log — After
-       [ ] What's Still Broken
-       [ ] results_three_seeds_before.json, results_three_seeds_after.json,
+       [X] Baseline vs. Trained table, with your prediction written beforehand
+       [X] Run Log — Before, five criteria across three seeds
+       [X] Confusion matrix TYPED AS A MARKDOWN TABLE
+       [X] A verdict on every criterion
+       [X] A diagnosis for every miss, using the agreement report as evidence
+       [X] Agreement Report with every disagreement adjudicated
+       [X] One improvement, with Run Log — After
+       [X] What's Still Broken
+       [X] results_three_seeds_before.json, results_three_seeds_after.json,
            baseline_results.json and
            agreement_results.json committed
-       [ ] At least four new commits
-       [ ] The SAME repository URL as last unit
+       [X] At least four new commits
+       [X] The SAME repository URL as last unit
 
      Do not delete and recreate this repository.
      ═════════════════════════════════════════════════════════════════════ -->
