@@ -401,7 +401,7 @@ My biggest off-diagnoal number is my opinion post are being called news. 6 of my
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
-For Criterion 1, the model never really learned how to tell the labels apart. the definitions were too broad, and it led to the model guessing news for most of the models.
+For Criterion 1, the model never really learned how to tell the labels apart. the definitions were too broad, and it led to the model guessing news for most of the models. The trained model picked news for 24 of the 30 test posts and never picked opinion, so it fell back on news because it could not distinguish between the 2. The average confidence was about 0.29, which is barely above the 0.25 (the value for guessing). 
 
 For Criterion 2, the model overpredicting news led to the two smallest labels being hit the hardest, especially opinion, which had an F1 of 0.00 on two seeds. 
 
