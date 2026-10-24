@@ -364,7 +364,7 @@ My prediction mostly held; the trained model handled humor and news better than 
      other way" is a direction, not just an error rate. -->
 
 
-My biggest off-diagnol number is my opinion post are being called news. 6 of my opinion post were called news and none of my news post were called opinion. So, my model is leaning toward news.
+My biggest off-diagnoal number is my opinion post are being called news. 6 of my opinion post were called news and none of my news post were called opinion. So, my model is leaning toward news.
 
 
 
@@ -406,7 +406,7 @@ My biggest off-diagnol number is my opinion post are being called news. 6 of my 
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 28 / 30 = 93%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -429,25 +429,25 @@ My biggest off-diagnol number is my opinion post are being called news. 6 of my 
      what you did across your own 200. -->
 
 **1.**
-> *The post:*
+> *The post:* Times are down about 3% since the shoe rules changed, so obviously the shoes are the whole story and the sport has a problem.
 >
-> *Staff said / I said:*
+> *Staff said / I said:* hot-take
 >
-> *My call, and why:*
+> *My call, and why:* I said analysis because there was a data that was used when making this opinion. The 3% time down made me think it was analysis
 >
-> *Which pile:*
+> *Which pile:* c
 
 **2.**
-> *The post:*
+> *The post:* Every injury thread on this forum is the same injury and the same three replies.
 >
-> *Staff said / I said:*
+> *Staff said / I said:* hot-take
 >
-> *My call, and why:*
+> *My call, and why:* I said reaction because I saw the post react to the forum and how each injury thread is the same. So, I said because it was immediate to something that happened.
 >
-> *Which pile:*
+> *Which pile:* c
 
 **What the pattern in my disagreements tells me:**
-
+I think the pattern shows that some posts can cross into multiple labels because I feel like both disagreements could fit both labels.
 
 
 ---
